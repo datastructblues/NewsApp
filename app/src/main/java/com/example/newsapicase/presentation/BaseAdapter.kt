@@ -38,6 +38,7 @@ class BaseAdapter(
         fun bind(article: Article) {
             article.urlToImage.let { binding.imageView.loadImage(it) }
             article.title.let{ binding.titleTextView.text = it }
+            article.source.name.let { binding.siteAddressTextView.text = it }
         }
     }
 
