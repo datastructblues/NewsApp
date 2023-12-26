@@ -1,5 +1,6 @@
 package com.example.newsapicase.presentation
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -14,25 +15,37 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-     val viewModel: MainActivityVM by viewModels()
+    val viewModel: MainActivityVM by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initCategoriesButtons()
         viewModel.getLiveDataObserver().observe(this) {
             if (it != null) {
-                showDataInRecyclerView(it)
+                showNewsDataInRecyclerView(it)
             }
         }
         GlobalScope.launch {
             viewModel.loadData()
         }
 
+    }
 
+    private fun initCategoriesButtons() {
+        val categories = resources.getStringArray(R.array.categories)
+        val rv: RecyclerView = findViewById(R.id.category_list)
+
+        val adapter = CategoryAdapter(this, categories) { category ->
+            println("Category clicked: $category")
+        }
+
+        rv.adapter = adapter
+        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
 
-    private fun showDataInRecyclerView(list: List<Article>) {
+    private fun showNewsDataInRecyclerView(list: List<Article>) {
         //iterate list
         for (article in list) {
             println(article.urlToImage)
@@ -42,10 +55,11 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.listView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = BaseAdapter(list,BaseAdapter.OnClickListener{
+        recyclerView.adapter = BaseAdapter(list, BaseAdapter.OnClickListener {
             println(it.title)
         })
-        }
+    }
+
 }
 
 

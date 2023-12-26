@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string-array
+        name="categories">
+        <item>general</item>
+        <item>entertainment</item>
+        <item>business</item>
+        <item>health</item>
+        <item>science</item>
+        <item>sports</item>
+        <item>technology</item>
+
+    </string-array>
+</resources>
