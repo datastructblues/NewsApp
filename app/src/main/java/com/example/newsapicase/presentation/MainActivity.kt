@@ -33,10 +33,17 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun showDataInRecyclerView(list: List<Article>) {
+        //iterate list
+        for (article in list) {
+            println(article.urlToImage)
+        }
+
+        //bazı url'lerin linki yok o zaman patlıyor.
+
         val recyclerView: RecyclerView = findViewById(R.id.listView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = BaseAdapter(list,BaseAdapter.OnClickListener{
-            println("selam")
+            println(it.title)
         })
         }
 }
