@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -17,6 +18,7 @@ import com.example.newsapicase.data.api.NetworkState
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.data.model.NewsResponse
 import com.example.newsapicase.databinding.ActivityMainBinding
+import com.example.newsapicase.onNavigationButtonClicked
 import com.example.newsapicase.presentation.detail.NewsDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityVM by viewModels()
+    val viewModel: MainActivityVM by viewModels()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var binding: ActivityMainBinding
 
@@ -36,76 +38,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initCategoriesButtonsAndNews()
-        observeNewsLiveData(viewModel.categoryNews)
-        observeNewsLiveData(viewModel.searchNews)
+       // initCategoriesButtonsAndNews()
+     //   observeNewsLiveData(viewModel.categoryNews)
+     //   observeNewsLiveData(viewModel.searchNews)
         setSearchViewListener()
-        swipeRefresh()
-    }
-
-    private fun observeNewsLiveData(newsLiveData: MutableLiveData<NetworkState<NewsResponse>>) {
-        newsLiveData.observe(this) { state ->
-            when (state) {
-                is NetworkState.Loading -> {
-                    println("Loading")
-                }
-                is NetworkState.Success -> {
-                    println("başarılı request")
-                    state.data?.articles?.let { articles -> showNewsDataInRecyclerView(articles) }
-                }
-                is NetworkState.Error -> {
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun initCategoriesButtonsAndNews() {
-        val categories = resources.getStringArray(R.array.categories)
-        val rv: RecyclerView = findViewById(R.id.category_list)
-        val adapter = CategoryAdapter(this, categories) { category ->
-            println("Category clicked: $category")
-            loadNews(category)
-        }
-        rv.adapter = adapter
-        rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-
-        val recyclerView: RecyclerView = findViewById(R.id.listView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
-            println(it.title)
-            //viewModel.saveArticle(it)
-            val intent = Intent(this@MainActivity, NewsDetailActivity::class.java)
-            intent.putExtra("url", it.url)
-            startActivity(intent)
-
-        })
-        recyclerView.adapter = newsAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
+       // swipeRefresh()
+        onNavigationClicks()
     }
 
 
-    private fun showNewsDataInRecyclerView(list: List<Article>) {
-        //iterate list
-            println(list.size)
-
-        //bazı url'lerin linki yok o zaman patlıyor.
-        newsAdapter.updateList(list)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun swipeRefresh() {
-        binding.refresher.setOnRefreshListener {
-            loadNews(DEFAULT_CATEGORY)
-            binding.refresher.isRefreshing = false
-        }
-    }
-
-    private fun loadNews(category: String) {
-        viewModel.loadNews(category)
-    }
 
     private fun setSearchViewListener() {
         val searchView = binding.searchView
@@ -130,6 +71,18 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater = menuInflater
+        menuInflater.inflate(R.menu.navigation_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun onNavigationClicks() {
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
+            onNavigationButtonClicked(menuItem)
+        }
     }
 
 }
