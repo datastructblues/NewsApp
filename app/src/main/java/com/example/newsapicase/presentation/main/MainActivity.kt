@@ -10,12 +10,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.DEFAULT_CATEGORY
+import com.example.newsapicase.DEFAULT_DELAY
 import com.example.newsapicase.R
 import com.example.newsapicase.data.api.NetworkState
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.data.model.NewsResponse
 import com.example.newsapicase.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -98,9 +103,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSearchViewListener() {
         val searchView = binding.searchView
+        var job: Job? = null
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchNews(query.toString())
+                job?.cancel()
+                job = MainScope().launch {
+                    delay(DEFAULT_DELAY)
+                    query?.let {
+                        if (query.isNotEmpty()) {
+                            viewModel.searchNews(query)
+                        }
+                    }
+                }
+               // viewModel.searchNews(query.toString())
                 return false
             }
 
