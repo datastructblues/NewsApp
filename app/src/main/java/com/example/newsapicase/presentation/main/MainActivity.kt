@@ -1,24 +1,25 @@
-package com.example.newsapicase.presentation
+package com.example.newsapicase.presentation.main
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.DEFAULT_CATEGORY
 import com.example.newsapicase.R
+import com.example.newsapicase.data.api.NetworkState
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityVM by viewModels()
-    private lateinit var newsAdapter: BaseAdapter
+    private lateinit var newsAdapter: NewsAdapter
     private lateinit var binding: ActivityMainBinding
 
 
@@ -27,12 +28,33 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initCategoriesButtonsAndNews()
-        viewModel.getLiveDataObserver().observe(this) {
-            if (it != null) {
-                showNewsDataInRecyclerView(it)
+        viewModel.categoryNews.observe(this) {
+            when (it) {
+                is NetworkState.Loading -> {
+                    println("Loading")
+                }
+                is NetworkState.Success -> {
+                    it.data?.articles?.let { articles -> showNewsDataInRecyclerView(articles) }
+                }
+                is NetworkState.Error -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
-        loadNews(DEFAULT_CATEGORY)
+        viewModel.searchNews.observe(this) {
+            when (it) {
+                is NetworkState.Loading -> {
+                    println("Loading")
+                }
+                is NetworkState.Success -> {
+                    it.data?.articles?.let { articles -> showNewsDataInRecyclerView(articles) }
+                }
+                is NetworkState.Error -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        setSearchViewListener()
         swipeRefresh()
     }
 
@@ -49,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.listView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        newsAdapter = BaseAdapter(emptyList(), BaseAdapter.OnClickListener {
+        newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
             println(it.title)
         })
         recyclerView.adapter = newsAdapter
@@ -76,7 +98,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadNews(category: String) {
-        viewModel.loadData(category)
+        viewModel.loadNews(category)
+    }
+
+    private fun setSearchViewListener() {
+        val searchView = binding.searchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchNews(newText.toString())
+                return true
+            }
+        })
     }
 }
 

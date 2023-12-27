@@ -1,4 +1,4 @@
-package com.example.newsapicase.presentation
+package com.example.newsapicase.presentation.main
 
 
 import android.content.Context

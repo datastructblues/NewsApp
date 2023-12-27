@@ -1,21 +1,19 @@
-package com.example.newsapicase.presentation
+package com.example.newsapicase.presentation.main
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.R
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.databinding.NewsItemBinding
 import com.example.newsapicase.loadImage
 
-class BaseAdapter(
+class NewsAdapter(
     private var newsList: List<Article>,
     private val onClickListener: OnClickListener
-) : RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
