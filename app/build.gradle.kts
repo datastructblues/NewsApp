@@ -88,6 +88,9 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:$activity_version")
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
 
+    //swiperefreshlayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 }
 
 kapt {

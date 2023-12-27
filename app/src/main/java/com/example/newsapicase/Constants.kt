@@ -4,3 +4,4 @@ package com.example.newsapicase
 
 const val API_KEY = "cff2b2905a3f461592bb6c1e59f87214"
 const val BASE_URL = "https://newsapi.org/"
+const val DEFAULT_CATEGORY = "general"

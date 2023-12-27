@@ -6,8 +6,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapicase.DEFAULT_CATEGORY
 import com.example.newsapicase.R
 import com.example.newsapicase.data.model.Article
+import com.example.newsapicase.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,20 +19,21 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: MainActivityVM by viewModels()
     private lateinit var newsAdapter: BaseAdapter
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initCategoriesButtonsAndNews()
         viewModel.getLiveDataObserver().observe(this) {
             if (it != null) {
                 showNewsDataInRecyclerView(it)
             }
         }
-        GlobalScope.launch {
-            viewModel.loadData("general")
-        }
-
+        loadNews(DEFAULT_CATEGORY)
+        swipeRefresh()
     }
 
     private fun initCategoriesButtonsAndNews() {
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = CategoryAdapter(this, categories) { category ->
             println("Category clicked: $category")
             GlobalScope.launch {
-                viewModel.loadData(category)
+                loadNews(category)
             }
         }
         rv.adapter = adapter
@@ -66,6 +69,18 @@ class MainActivity : AppCompatActivity() {
         newsAdapter.updateList(list)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun swipeRefresh() {
+        binding.refresher.setOnRefreshListener {
+            loadNews(DEFAULT_CATEGORY)
+            binding.refresher.isRefreshing = false
+        }
+    }
+    private fun loadNews(category: String) {
+        GlobalScope.launch {
+            viewModel.loadData(category)
+        }
+    }
 }
 
 
