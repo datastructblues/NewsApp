@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    val viewModel: MainActivityVM by viewModels()
+    private val viewModel: MainActivityVM by viewModels()
     private lateinit var newsAdapter: BaseAdapter
     private lateinit var binding: ActivityMainBinding
 
@@ -41,9 +41,7 @@ class MainActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.category_list)
         val adapter = CategoryAdapter(this, categories) { category ->
             println("Category clicked: $category")
-            GlobalScope.launch {
-                loadNews(category)
-            }
+            loadNews(category)
         }
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.listView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        newsAdapter = BaseAdapter(emptyList(),BaseAdapter.OnClickListener {
+        newsAdapter = BaseAdapter(emptyList(), BaseAdapter.OnClickListener {
             println(it.title)
         })
         recyclerView.adapter = newsAdapter
@@ -76,10 +74,9 @@ class MainActivity : AppCompatActivity() {
             binding.refresher.isRefreshing = false
         }
     }
+
     private fun loadNews(category: String) {
-        GlobalScope.launch {
-            viewModel.loadData(category)
-        }
+        viewModel.loadData(category)
     }
 }
 

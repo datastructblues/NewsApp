@@ -12,4 +12,8 @@ class NewsServiceRepository @Inject constructor(
         category,
         1
     )
+
+    suspend fun searchNews(searchQuery: String, pageNum: Int) = newsService.searchNews(
+        searchQuery,
+        pageNum)
 }
