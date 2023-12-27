@@ -1,5 +1,6 @@
 package com.example.newsapicase.presentation
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,9 @@ import com.example.newsapicase.databinding.NewsItemBinding
 import com.example.newsapicase.loadImage
 
 class BaseAdapter(
-    private val newsList: List<Article>,
+    private var newsList: List<Article>,
     private val onClickListener: OnClickListener
-) : ListAdapter<Article, BaseAdapter.ViewHolder>(DiffCallback()) {
+) : RecyclerView.Adapter<BaseAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -39,19 +40,27 @@ class BaseAdapter(
             article.urlToImage.let { binding.imageView.loadImage(it) }
             article.title.let{ binding.titleTextView.text = it }
             article.source.name.let { binding.siteAddressTextView.text = it }
+            article.publishedAt.let { binding.date.text = it }
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: List<Article>) {
+        //  sharingList = emptyList()
+        newsList = newList
+        notifyDataSetChanged()
+    }
+/*
     class DiffCallback : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.url == newItem.url
         }
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
     }
-
+ */
     class OnClickListener(val clickListener: (photoList: Article) -> Unit) {
         fun onClick(article: Article) = clickListener(article)
     }

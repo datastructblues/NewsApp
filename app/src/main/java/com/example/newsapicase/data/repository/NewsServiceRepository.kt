@@ -7,9 +7,9 @@ class NewsServiceRepository @Inject constructor(
     private val newsService: NewsService
 ) {
 
-    suspend fun getGeneralNews() = newsService.getGeneralNews(
+    suspend fun getGeneralNews(category: String) = newsService.getGeneralNews(
         "us",
-        "business",
+        category,
         1
     )
 }

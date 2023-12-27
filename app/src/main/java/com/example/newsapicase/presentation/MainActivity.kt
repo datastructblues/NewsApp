@@ -16,48 +16,54 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     val viewModel: MainActivityVM by viewModels()
+    private lateinit var newsAdapter: BaseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initCategoriesButtons()
+        initCategoriesButtonsAndNews()
         viewModel.getLiveDataObserver().observe(this) {
             if (it != null) {
                 showNewsDataInRecyclerView(it)
             }
         }
         GlobalScope.launch {
-            viewModel.loadData()
+            viewModel.loadData("general")
         }
 
     }
 
-    private fun initCategoriesButtons() {
+    private fun initCategoriesButtonsAndNews() {
         val categories = resources.getStringArray(R.array.categories)
         val rv: RecyclerView = findViewById(R.id.category_list)
-
         val adapter = CategoryAdapter(this, categories) { category ->
             println("Category clicked: $category")
+            GlobalScope.launch {
+                viewModel.loadData(category)
+            }
         }
-
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+
+        val recyclerView: RecyclerView = findViewById(R.id.listView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        newsAdapter = BaseAdapter(emptyList(),BaseAdapter.OnClickListener {
+            println(it.title)
+        })
+        recyclerView.adapter = newsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
 
     private fun showNewsDataInRecyclerView(list: List<Article>) {
         //iterate list
         for (article in list) {
-            println(article.urlToImage)
+            println(list.size)
         }
-
         //bazı url'lerin linki yok o zaman patlıyor.
-
-        val recyclerView: RecyclerView = findViewById(R.id.listView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = BaseAdapter(list, BaseAdapter.OnClickListener {
-            println(it.title)
-        })
+        newsAdapter.updateList(list)
     }
 
 }

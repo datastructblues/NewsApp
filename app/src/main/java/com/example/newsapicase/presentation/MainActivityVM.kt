@@ -11,14 +11,20 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityVM @Inject constructor(private val repository: NewsServiceRepository): ViewModel() {
 
-    private var liveData: MutableLiveData<List<Article>> = MutableLiveData()
+    var liveData: MutableLiveData<List<Article>>
+
+    init {
+        liveData = MutableLiveData()
+    }
 
     fun getLiveDataObserver(): MutableLiveData<List<Article>> {
         return liveData
     }
 
-     suspend fun loadData() {
-        repository.getGeneralNews().let {
+     suspend fun loadData(
+        category: String
+     ) {
+        repository.getGeneralNews(category).let {
             it.body().let { news ->
                 liveData.postValue(news?.articles)
             }
