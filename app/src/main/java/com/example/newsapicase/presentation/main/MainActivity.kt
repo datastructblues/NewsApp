@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
             println(it.title)
+            viewModel.saveArticle(it)
         })
         recyclerView.adapter = newsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 }
 
 

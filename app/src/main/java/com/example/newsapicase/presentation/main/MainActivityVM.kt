@@ -17,8 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityVM @Inject constructor(private val repository: NewsServiceRepository): ViewModel() {
 
-    var liveData: MutableLiveData<List<Article>>
-
     val categoryNews: MutableLiveData<NetworkState<NewsResponse>> = MutableLiveData()
     var categoryNewsPage = 1
 
@@ -27,12 +25,8 @@ class MainActivityVM @Inject constructor(private val repository: NewsServiceRepo
 
     init {
         loadNews(DEFAULT_CATEGORY)
-        liveData = MutableLiveData()
     }
 
-    fun getLiveDataObserver(): MutableLiveData<List<Article>> {
-        return liveData
-    }
 
     fun loadNews(category: String) = viewModelScope.launch {
         categoryNews.postValue(NetworkState.Loading())
@@ -64,4 +58,16 @@ class MainActivityVM @Inject constructor(private val repository: NewsServiceRepo
         }
         return NetworkState.Error(response.message())
     }
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        repository.upsert(article)
+    }
+
+    fun getSavedNews() = repository.getSavedNews()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        repository.deleteArticle(article)
+    }
+
+
 }
