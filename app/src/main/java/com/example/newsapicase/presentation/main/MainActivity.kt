@@ -38,11 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-       // initCategoriesButtonsAndNews()
-     //   observeNewsLiveData(viewModel.categoryNews)
-     //   observeNewsLiveData(viewModel.searchNews)
         setSearchViewListener()
-       // swipeRefresh()
         onNavigationClicks()
     }
 
