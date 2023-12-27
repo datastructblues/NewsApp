@@ -82,9 +82,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNewsDataInRecyclerView(list: List<Article>) {
         //iterate list
-        for (article in list) {
             println(list.size)
-        }
+
         //bazı url'lerin linki yok o zaman patlıyor.
         newsAdapter.updateList(list)
     }
