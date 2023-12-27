@@ -95,6 +95,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+    //webview
+    implementation("androidx.webkit:webkit:1.9.0")
+
 
 }
 

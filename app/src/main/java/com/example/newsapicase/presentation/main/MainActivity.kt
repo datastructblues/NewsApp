@@ -1,6 +1,7 @@
 package com.example.newsapicase.presentation.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
@@ -16,6 +17,7 @@ import com.example.newsapicase.data.api.NetworkState
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.data.model.NewsResponse
 import com.example.newsapicase.databinding.ActivityMainBinding
+import com.example.newsapicase.presentation.detail.NewsDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -73,7 +75,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
             println(it.title)
-            viewModel.saveArticle(it)
+            //viewModel.saveArticle(it)
+            val intent = Intent(this@MainActivity, NewsDetailActivity::class.java)
+            intent.putExtra("url", it.url)
+            startActivity(intent)
+
         })
         recyclerView.adapter = newsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
