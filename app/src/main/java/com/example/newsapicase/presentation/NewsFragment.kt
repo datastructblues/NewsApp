@@ -64,7 +64,7 @@ class NewsFragment : Fragment() {
 
 
         listView.layoutManager = LinearLayoutManager(requireContext())
-        newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
+        newsAdapter = NewsAdapter(emptyList(), TAG, NewsAdapter.OnClickListener {
             println(it.title)
             //viewModel.saveArticle(it)
             val intent = Intent(requireContext(), NewsDetailActivity::class.java)

@@ -27,7 +27,7 @@ class FavoriteFragment : Fragment() {
         val listView = view.findViewById<RecyclerView>(R.id.rvFavorite)
         listView.layoutManager = LinearLayoutManager(requireContext())
 
-        newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
+        newsAdapter = NewsAdapter(emptyList(), TAG, NewsAdapter.OnClickListener {
         }){
             viewModel.deleteArticle(it)
         }

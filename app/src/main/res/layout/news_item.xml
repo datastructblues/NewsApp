@@ -67,8 +67,7 @@
                     android:layout_marginTop="4dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="@drawable/favorite_border"
-                    android:background="@color/black"/>
+                    android:src="@drawable/favorite_border" />
 
             </LinearLayout>
 

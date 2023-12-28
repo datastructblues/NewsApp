@@ -12,6 +12,7 @@ import com.example.newsapicase.loadImage
 
 class NewsAdapter(
     private var newsList: List<Article>,
+    private val TAG: String,
     private val onClickListener: OnClickListener,
     private val onFavoriteClickListener: OnFavoriteClickListener
 ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
@@ -43,6 +44,9 @@ class NewsAdapter(
             binding.favoriteButton.setOnClickListener {
                 onFavoriteClickListener.onFavoriteClick(article)
             }
+            if (TAG == "FavoriteFragment") {
+                binding.favoriteButton.setImageResource(R.drawable.ic_delete)
+            }
         }
     }
 
@@ -63,7 +67,7 @@ class NewsAdapter(
         }
     }
  */
-    class OnClickListener(val clickListener: (photoList: Article) -> Unit) {
+    class OnClickListener(val clickListener: (newsList: Article) -> Unit) {
         fun onClick(article: Article) = clickListener(article)
     }
     fun interface OnFavoriteClickListener {
