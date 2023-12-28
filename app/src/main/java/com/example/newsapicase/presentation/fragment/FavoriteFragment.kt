@@ -34,6 +34,14 @@ class FavoriteFragment : Fragment() {
             intent.putExtra("url", it.url)
             startActivity(intent)
              */
+            val bundle = Bundle()
+            bundle.putSerializable("article", it) // veriyi ekleyin
+            val detailFragment = DetailFragment()
+            detailFragment.arguments = bundle
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.center, detailFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }){
             viewModel.deleteArticle(it)
         }
