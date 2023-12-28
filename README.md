@@ -6,7 +6,7 @@ This News app application retrieves news data from [newsapi.org](newsapi.org), d
 
 1. Clone this repository locally or download as a ZIP file.
 
-2. Download the application using [this link](https://drive.google.com/file/d/124EJuRVI6-jByqRhOISxqK8bhl34YxwQ/view?usp=sharing) and install.
+2. Download the application using [this link](https://drive.google.com/file/d/1Rt7nHd8x1k7OBq9AkxXAwQL_KxNSM8t4/view?usp=sharing) and install.
 
 ## Technologies
     - Clean Architecture
