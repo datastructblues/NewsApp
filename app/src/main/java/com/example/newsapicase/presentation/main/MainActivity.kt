@@ -14,12 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.DEFAULT_CATEGORY
 import com.example.newsapicase.DEFAULT_DELAY
 import com.example.newsapicase.R
-import com.example.newsapicase.data.api.NetworkState
-import com.example.newsapicase.data.model.Article
-import com.example.newsapicase.data.model.NewsResponse
 import com.example.newsapicase.databinding.ActivityMainBinding
 import com.example.newsapicase.onNavigationButtonClicked
-import com.example.newsapicase.presentation.detail.NewsDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -38,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        startNewsFragment()
         setSearchViewListener()
         onNavigationClicks()
     }
@@ -67,6 +64,10 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+    }
+
+    private fun startNewsFragment() {
+        onNavigationButtonClicked(binding.bottomNavigation.menu.findItem(R.id.news))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
