@@ -27,6 +27,9 @@ This News app application retrieves news data from [newsapi.org](newsapi.org), d
     [✅] Users should be able to filter news headlines by performing a search within the application.
     [✅] The application must be developed using the Kotlin language.
 
+## Usage Video
+[LOOM VIDEO LINK](https://www.loom.com/share/e54defe00e054136a23b3cbe103a2394?sid=314e277d-c09c-4300-8bd8-9f7c5ff8dcd0)
+
 ## Screenshots
 
 ![image](https://github.com/datastructblues/NewsApp/assets/86204793/c62b8fe0-ae6c-4dd9-87f1-96c719ab1626)  ![image](https://github.com/datastructblues/NewsApp/assets/86204793/3091d16e-cd83-4313-9521-14adaf59459f)
