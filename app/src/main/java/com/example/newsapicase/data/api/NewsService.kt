@@ -13,6 +13,7 @@ interface NewsService {
     suspend fun getGeneralNews(
         @Query("country") country: String = "us", //uygulamanin diline gore otomatik filtrele
         @Query("category") category: String,
+        @Query("pageSize") pageSize: Int = 100,
         @Query("page") pageNum: Int,
         @Query("apiKey") apiKey: String = API_KEY
     ): Response<NewsResponse>

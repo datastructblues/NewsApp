@@ -58,6 +58,7 @@ class NewsFragment : Fragment() {
         val adapter = CategoryAdapter(requireContext(), categories) { category ->
             println("Category clicked: $category")
             viewModel.loadNews(category)
+            listView.smoothScrollToPosition(0)
         }
         categoriesView.adapter = adapter
         categoriesView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

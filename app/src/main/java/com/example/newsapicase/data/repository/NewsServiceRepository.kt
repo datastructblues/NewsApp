@@ -14,6 +14,7 @@ class NewsServiceRepository @Inject constructor(
     suspend fun getGeneralNews(category: String) = newsService.getGeneralNews(
         "us",
         category,
+        100,
         1
     )
 
