@@ -36,7 +36,7 @@ fun MainActivity.onNavigationButtonClicked(item: MenuItem): Boolean {
     }
 
     return when (item.itemId) {
-        R.id.profile -> {
+        R.id.news -> {
             if (activeFragment == newsFragment) {
                 return false
             }
@@ -50,7 +50,7 @@ fun MainActivity.onNavigationButtonClicked(item: MenuItem): Boolean {
             true
         }
 
-        R.id.maps -> {
+        R.id.favorites -> {
             if (activeFragment == favoriteFragment) {
                 return false
             }

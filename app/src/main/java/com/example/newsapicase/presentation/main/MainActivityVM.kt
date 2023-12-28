@@ -68,6 +68,4 @@ class MainActivityVM @Inject constructor(private val repository: NewsServiceRepo
     fun deleteArticle(article: Article) = viewModelScope.launch {
         repository.deleteArticle(article)
     }
-
-
 }
