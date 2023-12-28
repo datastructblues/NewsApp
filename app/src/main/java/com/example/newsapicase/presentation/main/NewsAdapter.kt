@@ -12,7 +12,8 @@ import com.example.newsapicase.loadImage
 
 class NewsAdapter(
     private var newsList: List<Article>,
-    private val onClickListener: OnClickListener
+    private val onClickListener: OnClickListener,
+    private val onFavoriteClickListener: OnFavoriteClickListener
 ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +40,9 @@ class NewsAdapter(
             article.title.let{ binding.titleTextView.text = it }
             article.source.name.let { binding.siteAddressTextView.text = it }
             article.publishedAt.let { binding.date.text = it }
+            binding.favoriteButton.setOnClickListener {
+                onFavoriteClickListener.onFavoriteClick(article)
+            }
         }
     }
 
@@ -61,5 +65,8 @@ class NewsAdapter(
  */
     class OnClickListener(val clickListener: (photoList: Article) -> Unit) {
         fun onClick(article: Article) = clickListener(article)
+    }
+    fun interface OnFavoriteClickListener {
+        fun onFavoriteClick(article: Article)
     }
 }

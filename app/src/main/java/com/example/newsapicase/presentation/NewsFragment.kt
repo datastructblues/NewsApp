@@ -71,17 +71,18 @@ class NewsFragment : Fragment() {
             intent.putExtra("url", it.url)
             startActivity(intent)
 
-        })
+        }) {
+            viewModel.saveArticle(it)
+            Toast.makeText(requireContext(), "Favorilere eklendi", Toast.LENGTH_SHORT).show()
+        }
         listView.adapter = newsAdapter
         listView.layoutManager = LinearLayoutManager(requireContext())
 
     }
 
-
     private fun showNewsDataInRecyclerView(list: List<Article>) {
         //iterate list
         println(list.size)
-
         //bazı url'lerin linki yok o zaman patlıyor.
         newsAdapter.updateList(list)
     }
@@ -111,6 +112,5 @@ class NewsFragment : Fragment() {
             }
         }
     }
-
 
 }

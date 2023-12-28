@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.R
+import com.example.newsapicase.presentation.main.MainActivity
+import com.example.newsapicase.presentation.main.MainActivityVM
+import com.example.newsapicase.presentation.main.NewsAdapter
 
 class FavoriteFragment : Fragment() {
 
@@ -13,8 +18,24 @@ class FavoriteFragment : Fragment() {
         const val TAG = "FavoriteFragment"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    lateinit var viewModel: MainActivityVM
+    private lateinit var newsAdapter: NewsAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
+        val listView = view.findViewById<RecyclerView>(R.id.rvFavorite)
+        listView.layoutManager = LinearLayoutManager(requireContext())
+
+        newsAdapter = NewsAdapter(emptyList(), NewsAdapter.OnClickListener {
+        }){
+            viewModel.deleteArticle(it)
+        }
+        listView.adapter = newsAdapter
+
+        viewModel.getSavedNews().observe(viewLifecycleOwner) { savedNews ->
+            newsAdapter.updateList(savedNews)
+        }
 
     }
 
