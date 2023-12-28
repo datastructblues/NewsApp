@@ -66,22 +66,12 @@ class NewsFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(requireContext())
         newsAdapter = NewsAdapter(emptyList(), TAG, NewsAdapter.OnClickListener {
             println(it.title)
-            //viewModel.saveArticle(it)
             val intent = Intent(requireContext(), NewsDetailActivity::class.java)
             intent.putExtra("url", it.url)
             startActivity(intent)
 
         }) {
             viewModel.saveArticle(it)
-            println(it.url)
-            println(it.urlToImage)
-            println(it.title)
-            println(it.id)
-            println(it.author)
-            println(it.content)
-            println(it.description)
-            println(it.publishedAt)
-            println(it.source)
             Toast.makeText(requireContext(), "Favorilere eklendi", Toast.LENGTH_SHORT).show()
         }
         listView.adapter = newsAdapter

@@ -1,5 +1,6 @@
 package com.example.newsapicase.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapicase.R
+import com.example.newsapicase.presentation.detail.NewsDetailActivity
 import com.example.newsapicase.presentation.main.MainActivity
 import com.example.newsapicase.presentation.main.MainActivityVM
 import com.example.newsapicase.presentation.main.NewsAdapter
@@ -28,6 +30,9 @@ class FavoriteFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(requireContext())
 
         newsAdapter = NewsAdapter(emptyList(), TAG, NewsAdapter.OnClickListener {
+            val intent = Intent(requireContext(), NewsDetailActivity::class.java)
+            intent.putExtra("url", it.url)
+            startActivity(intent)
         }){
             viewModel.deleteArticle(it)
         }
