@@ -1,4 +1,4 @@
-package com.example.newsapicase.presentation
+package com.example.newsapicase.presentation.fragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -73,6 +73,15 @@ class NewsFragment : Fragment() {
 
         }) {
             viewModel.saveArticle(it)
+            println(it.url)
+            println(it.urlToImage)
+            println(it.title)
+            println(it.id)
+            println(it.author)
+            println(it.content)
+            println(it.description)
+            println(it.publishedAt)
+            println(it.source)
             Toast.makeText(requireContext(), "Favorilere eklendi", Toast.LENGTH_SHORT).show()
         }
         listView.adapter = newsAdapter

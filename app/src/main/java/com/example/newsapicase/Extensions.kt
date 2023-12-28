@@ -4,8 +4,8 @@ import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.newsapicase.presentation.FavoriteFragment
-import com.example.newsapicase.presentation.NewsFragment
+import com.example.newsapicase.presentation.fragment.FavoriteFragment
+import com.example.newsapicase.presentation.fragment.NewsFragment
 import com.example.newsapicase.presentation.main.MainActivity
 
 fun AppCompatImageView.loadImage(url: String?) {
