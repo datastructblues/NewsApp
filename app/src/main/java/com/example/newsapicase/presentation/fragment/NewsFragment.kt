@@ -1,13 +1,12 @@
 package com.example.newsapicase.presentation.fragment
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import com.example.newsapicase.R
 import com.example.newsapicase.data.api.NetworkState
 import com.example.newsapicase.data.model.Article
 import com.example.newsapicase.data.model.NewsResponse
-import com.example.newsapicase.presentation.detail.NewsDetailActivity
 import com.example.newsapicase.presentation.main.CategoryAdapter
 import com.example.newsapicase.presentation.main.MainActivity
 import com.example.newsapicase.presentation.main.MainActivityVM
@@ -67,9 +65,20 @@ class NewsFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(requireContext())
         newsAdapter = NewsAdapter(emptyList(), TAG, NewsAdapter.OnClickListener {
             println(it.title)
+            /*
+            if you want to use webview.
             val intent = Intent(requireContext(), NewsDetailActivity::class.java)
             intent.putExtra("url", it.url)
             startActivity(intent)
+             */
+            val bundle = Bundle()
+            bundle.putSerializable("article", it) // veriyi ekleyin
+            val detailFragment = DetailFragment()
+            detailFragment.arguments = bundle
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.center, detailFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
 
         }) {
             viewModel.saveArticle(it)
@@ -81,9 +90,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun showNewsDataInRecyclerView(list: List<Article>) {
-        //iterate list
         println(list.size)
-        //bazı url'lerin linki yok o zaman patlıyor.
         newsAdapter.updateList(list)
     }
 

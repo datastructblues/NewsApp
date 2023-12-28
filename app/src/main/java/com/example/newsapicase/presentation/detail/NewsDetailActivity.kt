@@ -8,6 +8,11 @@ import android.webkit.WebView
 import com.example.newsapicase.R
 import dagger.hilt.android.AndroidEntryPoint
 
+
+/*
+This class is created if you desire to open news directly with webview
+
+
 @AndroidEntryPoint
 class NewsDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,3 +44,6 @@ class NewsDetailActivity : AppCompatActivity() {
         }
     }
 }
+
+
+ */

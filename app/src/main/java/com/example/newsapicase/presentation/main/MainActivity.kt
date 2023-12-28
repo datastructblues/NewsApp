@@ -1,17 +1,12 @@
 package com.example.newsapicase.presentation.main
 
-import android.annotation.SuppressLint
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapicase.DEFAULT_CATEGORY
 import com.example.newsapicase.DEFAULT_DELAY
 import com.example.newsapicase.R
 import com.example.newsapicase.databinding.ActivityMainBinding
@@ -34,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setToolbar()
         startNewsFragment()
         setSearchViewListener()
         onNavigationClicks()
@@ -82,6 +78,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setToolbar() {
+        val toolbar = findViewById<View>(R.id.my_toolbar) as androidx.appcompat.widget.Toolbar
+        setSupportActionBar(toolbar)
+        toolbar.hideOverflowMenu()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
 }
 
 
