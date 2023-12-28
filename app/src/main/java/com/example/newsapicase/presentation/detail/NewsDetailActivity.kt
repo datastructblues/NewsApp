@@ -12,15 +12,17 @@ import dagger.hilt.android.AndroidEntryPoint
 /*
 This class is created if you desire to open news directly with webview
 
-
+*/
 @AndroidEntryPoint
 class NewsDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /*
         setContentView(R.layout.activity_news_detail)
         val url = getDataFromMain()
         setToolbar()
         openWebView(url)
+         */
     }
 
     private fun getDataFromMain(): String {
@@ -44,6 +46,3 @@ class NewsDetailActivity : AppCompatActivity() {
         }
     }
 }
-
-
- */

@@ -11,7 +11,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
 import com.example.newsapicase.R
 import com.example.newsapicase.data.model.Article
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
 

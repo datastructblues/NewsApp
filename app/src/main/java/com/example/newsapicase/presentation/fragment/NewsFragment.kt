@@ -20,7 +20,9 @@ import com.example.newsapicase.presentation.main.CategoryAdapter
 import com.example.newsapicase.presentation.main.MainActivity
 import com.example.newsapicase.presentation.main.MainActivityVM
 import com.example.newsapicase.presentation.main.NewsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
 
 

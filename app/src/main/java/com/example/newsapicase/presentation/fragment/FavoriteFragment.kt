@@ -11,7 +11,9 @@ import com.example.newsapicase.R
 import com.example.newsapicase.presentation.main.MainActivity
 import com.example.newsapicase.presentation.main.MainActivityVM
 import com.example.newsapicase.presentation.main.NewsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
     companion object {
