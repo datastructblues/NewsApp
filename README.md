@@ -1,6 +1,6 @@
 # News App
 
-This News app application retrieves news data from [newsapi.org](newsapi.org), displays and saves it.
+This News app application retrieves news data from [newsapi.org](newsapi.org), displays and saves it. You can retrieve data from web and save items to database or elete them. (CRUD Operations)
 
 ## How to Use?
 
